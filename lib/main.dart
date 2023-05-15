@@ -196,13 +196,11 @@ void run() async {
     var cookie = {
       "PHPSESSID" : sessionId,
     };
-    print(cookie);
     // Authorization
     var token = response.data['data'];
     var header = {
       "Authorization": token,
     };
-    print(token);
 
     if (token != null) {
       // 하교(노원) 버스리스트 가져오기
