@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +111,7 @@ class MyApp extends StatelessWidget {
                   ),
                   SizedBox(height: 50,),
                   ElevatedButton(onPressed: () {
-                    run();
+                    executeThread();
                   },
                     child: Text('슛'),
                     style: ElevatedButton.styleFrom(
@@ -156,7 +157,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-void run() async {
+void runningApp() async {
 
   var loginData = {
     "id" : _id,
@@ -183,9 +184,6 @@ void run() async {
   var response = await dio.post(loginUrl, data: jsonEncode(loginData));
 
   if (response.data['result'].contains("OK")) {
-    print('응답코드 : ${response.statusCode}');
-    print('바디 : ${response.data}');
-
     // 쿠키 파싱
     var needParse = response.headers['set-cookie'].toString();
     var sessionIdStartIndex = needParse.indexOf("PHPSESSID=") + "PHPSESSID=".length;
@@ -211,8 +209,6 @@ void run() async {
           // 하교 버스 시간 설정
           if (data['operateTime'] == _downTime) {
             downBusSeq = data['busSeq'];
-          } else {
-            print("하교 버스 시간 설정 실패");
           }
         }
       } else {
@@ -227,8 +223,6 @@ void run() async {
           // 등교 버스 시간 설정
           if (data['operateTime'] == _upTime) {
             upBusSeq = data['busSeq'];
-          } else {
-            print("등교 버스 시간 설정 실패");
           }
         }
       } else {
@@ -282,7 +276,7 @@ void run() async {
     } catch (e) {
       print(e);
     }
-    print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+
     print("result값이 OK면 성공");
     try {
       print('등교내역 : ${busUpReserve.toString()}');
@@ -298,4 +292,19 @@ void run() async {
     print("로그인 실패");
     print(response.data);
   }
+}
+
+void checkAt22() {
+  DateTime now = DateTime.now();
+  if (now.hour >= 22) {
+    runningApp();
+  } else {
+    // 22시 - 현재 시간을 하여 변수에 담고 sleep을 통해 기다린 뒤 실행
+    int remainingSeconds = (22 - now.hour) * 3600 - now.minute * 60 - now.second;
+    Future.delayed(Duration(seconds: remainingSeconds + 1), runningApp);
+  }
+}
+
+void executeThread() {
+  Timer.run(checkAt22);
 }
