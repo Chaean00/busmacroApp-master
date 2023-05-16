@@ -9,18 +9,24 @@ var _upTime = '';
 var _downTime = '';
 var _upSeat = '';
 var _downSeat = '';
+String stateText = '슈슈슛';
+var isButtonEnabled = true;
 
 void main() {
   // 앱 시작해주세요~
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  _MyAppState createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -110,15 +116,22 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 50,),
-                  ElevatedButton(onPressed: () {
+                  ElevatedButton(onPressed: isButtonEnabled ? () {
+                    setState(() {
+                      stateText = "실행 중";
+                    });
                     executeThread();
-                  },
-                    child: Text('슛'),
+                    setState(() {
+                      stateText = "실행 완료";
+                    });
+                    isButtonEnabled = false;
+                  } : null,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.amberAccent,
-                      onPrimary: Colors.black,
+                      backgroundColor: Colors.amberAccent,
+                      foregroundColor: Colors.black,
                       fixedSize: const Size(150, 50),
                     ),
+                      child: Text(stateText),
                   ),
                 ],
               ),
