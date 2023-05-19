@@ -25,6 +25,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var selectedRadio;
+
+  setSelectedRadio(var val) {
+    setState(() {
+      selectedRadio = val;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -120,7 +127,11 @@ class _MyAppState extends State<MyApp> {
                     setState(() {
                       stateText = "실행 중";
                     });
-                    executeThread();
+                    if (selectedRadio == 1) {
+                      runningApp();
+                    } else if (selectedRadio == 2) {
+                      executeThread();
+                    }
                     setState(() {
                       stateText = "실행 완료";
                     });
@@ -132,6 +143,22 @@ class _MyAppState extends State<MyApp> {
                       fixedSize: const Size(150, 50),
                     ),
                       child: Text(stateText),
+                  ),
+                  RadioListTile(
+                    value: 1,
+                    groupValue: selectedRadio,
+                    onChanged: (val) {
+                      setSelectedRadio(val);
+                    },
+                    title: Text("일반 신청"),
+                  ),
+                  RadioListTile(
+                    value: 2,
+                    groupValue: selectedRadio,
+                    onChanged: (val) {
+                      setSelectedRadio(val);
+                    },
+                    title: Text("예약 신청"),
                   ),
                 ],
               ),
