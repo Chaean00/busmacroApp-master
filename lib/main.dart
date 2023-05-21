@@ -25,7 +25,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var selectedRadio;
+  var selectedRadio = 0;
 
   setSelectedRadio(var val) {
     setState(() {
@@ -122,20 +122,57 @@ class _MyAppState extends State<MyApp> {
                       onChanged: (text) {_downSeat = text;},
                     ),
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(height: 20,),
+                  SizedBox(
+                    width: 150,
+                    height: 50,
+                    child: RadioListTile(
+                      value: 1,
+                      groupValue: selectedRadio,
+                      onChanged: (val) {
+                        setSelectedRadio(val);
+                        print(val);
+                      },
+                      title: Text("일반 신청"),
+
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  SizedBox(
+                    width: 150,
+                    height: 50,
+                    child: RadioListTile(
+                      value: 2,
+                      groupValue: selectedRadio,
+                      onChanged: (val) {
+                        setSelectedRadio(val);
+                        print(val);
+                      },
+                      title: Text("예약 신청"),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
                   ElevatedButton(onPressed: isButtonEnabled ? () {
-                    setState(() {
-                      stateText = "실행 중";
-                    });
+
                     if (selectedRadio == 1) {
+                      setState(() {
+                        stateText = "실행 중";
+                      });
                       runningApp();
+                      setState(() {
+                        stateText = "실행 완료";
+                      });
+                      isButtonEnabled = false;
                     } else if (selectedRadio == 2) {
+                      setState(() {
+                        stateText = "실행 중";
+                      });
                       executeThread();
+                      setState(() {
+                        stateText = "실행 완료";
+                      });
+                      isButtonEnabled = false;
                     }
-                    setState(() {
-                      stateText = "실행 완료";
-                    });
-                    isButtonEnabled = false;
                   } : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.amberAccent,
@@ -143,22 +180,6 @@ class _MyAppState extends State<MyApp> {
                       fixedSize: const Size(150, 50),
                     ),
                       child: Text(stateText),
-                  ),
-                  RadioListTile(
-                    value: 1,
-                    groupValue: selectedRadio,
-                    onChanged: (val) {
-                      setSelectedRadio(val);
-                    },
-                    title: Text("일반 신청"),
-                  ),
-                  RadioListTile(
-                    value: 2,
-                    groupValue: selectedRadio,
-                    onChanged: (val) {
-                      setSelectedRadio(val);
-                    },
-                    title: Text("예약 신청"),
                   ),
                 ],
               ),
