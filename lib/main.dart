@@ -35,185 +35,196 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      darkTheme: ThemeData.dark(),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('버스 매크로'),
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
-        body: SingleChildScrollView(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Column(
-                children: [
-                  SizedBox(height: 20,),
-                  SizedBox(
-                    width: 150, height: 50,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        labelText: 'ID',
-                        hintText: 'ID를 입력해주세요',
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (text) {_id = text;},
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  SizedBox(
-                    width: 150, height: 50,
-                    child: TextField(
-                        decoration: InputDecoration(
-                          labelText: 'PW',
-                          hintText: 'PW를 입력해주세요',
-                          border: OutlineInputBorder(),
-                        ),
-                      onChanged: (text) {_pw = text;},
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  SizedBox(
-                    width: 150, height: 50,
-                    child: TextField(
-                        decoration: InputDecoration(
-                          labelText: '등교시간',
-                          hintText: '등교시간을 입력해주세요',
-                          border: OutlineInputBorder(),
-                        ),
-                      onChanged: (text) {_upTime = text;},
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  SizedBox(
-                    width: 150, height: 50,
-                    child: TextField(
-                        decoration: InputDecoration(
-                          labelText: '하교시간',
-                          hintText: '하교시간을 입력해주세요',
-                          border: OutlineInputBorder(),
-                        ),
-                      onChanged: (text) {_downTime = text;},
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  SizedBox(
-                    width: 150, height: 50,
-                    child: TextField(
-                        decoration: InputDecoration(
-                          labelText: '등교좌석',
-                          hintText: '등교좌석번호를 입력해주세요',
-                          border: OutlineInputBorder(),
-                        ),
-                      onChanged: (text) {_upSeat = text;},
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  SizedBox(
-                    width: 150, height: 50,
-                    child: TextField(
-                        decoration: InputDecoration(
-                          labelText: '하교좌석',
-                          hintText: '하교좌석번호를 입력해주세요',
-                          border: OutlineInputBorder(),
-                        ),
-                      onChanged: (text) {_downSeat = text;},
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  SizedBox(
-                    width: 150,
-                    height: 50,
-                    child: RadioListTile(
-                      value: 1,
-                      groupValue: selectedRadio,
-                      onChanged: (val) {
-                        setSelectedRadio(val);
-                        print(val);
-                      },
-                      title: Text("일반 신청"),
-
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  SizedBox(
-                    width: 150,
-                    height: 50,
-                    child: RadioListTile(
-                      value: 2,
-                      groupValue: selectedRadio,
-                      onChanged: (val) {
-                        setSelectedRadio(val);
-                        print(val);
-                      },
-                      title: Text("예약 신청"),
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  ElevatedButton(onPressed: isButtonEnabled ? () {
-
-                    if (selectedRadio == 1) {
-                      setState(() {
-                        stateText = "실행 중";
-                      });
-                      runningApp();
-                      setState(() {
-                        stateText = "실행 완료";
-                      });
-                      isButtonEnabled = false;
-                    } else if (selectedRadio == 2) {
-                      setState(() {
-                        stateText = "실행 중";
-                      });
-                      executeThread();
-                      setState(() {
-                        stateText = "실행 완료";
-                      });
-                      isButtonEnabled = false;
-                    }
-                  } : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amberAccent,
-                      foregroundColor: Colors.black,
-                      fixedSize: const Size(150, 50),
-                    ),
-                      child: Text(stateText),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  SizedBox(height: 20,),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                    child: Text("등교\n\n07:50\n08:00\n08:10\n08:20\n08:30\n08:40\n08:50\n09:00\n09:10\n09:20\n09:30\n09:40\n09:50\n10:00\n10:10\n10:20\n10:30\n10:40\n10:50\n11:00\n11:10\n11:20\n11:30\n11:40\n11:50\n12:00\n12:20\n12:40"),
-                  )
-              ],
-              ),
-              Column(
-                children: [
-                  SizedBox(height: 20,),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                    child: Text("하교\n\n09:10\n09:20\n09:30\n09:40\n09:50\n10:00\n10:10\n10:20\n10:30\n10:40\n10:50\n11:00\n11:20\n11:40\n12:00\n13:00\n13:20\n13:40\n14:00\n14:20\n14:40\n15:00\n15:10\n15:20\n15:30\n15:40\n16:00\n16:30\n17:00\n17:10\n17:20\n17:30\n18:00\n18:30\n19:00"),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  SizedBox(height: 20,),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                    child: Text("운전석\n\n1 2          3 4\n5 6          7 8\n9 10        11 12\n13 14      15 16\n17 18      19 20\n21 22      23 24\n25 26      27 28\n29 30      31 32\n33 34      35 36\n37 38      39 40\n\n가끔 오른쪽이\n1일때도 있음"),
-                  )
-                ],
-              )
-            ],
+        darkTheme: ThemeData.dark(),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('버스 매크로'),
           ),
-        ),
-      )
+          body: Builder(
+            builder: (context) {
+              return SingleChildScrollView(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          width: 150, height: 50,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: 'ID',
+                              hintText: 'ID를 입력해주세요',
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (text) {_id = text;},
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          width: 150, height: 50,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: 'PW',
+                              hintText: 'PW를 입력해주세요',
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (text) {_pw = text;},
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          width: 150, height: 50,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: '등교시간',
+                              hintText: '등교시간을 입력해주세요',
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (text) {_upTime = text;},
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          width: 150, height: 50,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: '하교시간',
+                              hintText: '하교시간을 입력해주세요',
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (text) {_downTime = text;},
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          width: 150, height: 50,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: '등교좌석',
+                              hintText: '등교좌석번호를 입력해주세요',
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (text) {_upSeat = text;},
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          width: 150, height: 50,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: '하교좌석',
+                              hintText: '하교좌석번호를 입력해주세요',
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (text) {_downSeat = text;},
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          width: 150,
+                          height: 50,
+                          child: RadioListTile(
+                            value: 1,
+                            groupValue: selectedRadio,
+                            onChanged: (val) {
+                              setSelectedRadio(val);
+                              print(val);
+                            },
+                            title: Text("일반 신청"),
+
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          width: 150,
+                          height: 50,
+                          child: RadioListTile(
+                            value: 2,
+                            groupValue: selectedRadio,
+                            onChanged: (val) {
+                              setSelectedRadio(val);
+                              print(val);
+                            },
+                            title: Text("예약 신청"),
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          child: ElevatedButton(onPressed: isButtonEnabled ? () {
+                            if (selectedRadio == 1 && _id != '' && _pw != '') {
+                              setState(() {
+                                stateText = "실행 중";
+                              });
+                              runningApp();
+                              setState(() {
+                                stateText = "실행 완료";
+                              });
+                              isButtonEnabled = false;
+                            } else if (selectedRadio == 2 && _id != '' && _pw != '') {
+                              setState(() {
+                                stateText = "실행 중";
+                              });
+                              executeThread();
+                              setState(() {
+                                stateText = "실행 완료";
+                              });
+                              isButtonEnabled = false;
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('ID / PW / 신청 버튼을 확인해주세요.'),
+                                ),
+                              );
+                            }
+                          } : null,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.amberAccent,
+                              foregroundColor: Colors.black,
+                              fixedSize: const Size(150, 50),
+                            ),
+                            child: Text(stateText),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(height: 20,),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                          child: Text("등교\n\n07:50\n08:00\n08:10\n08:20\n08:30\n08:40\n08:50\n09:00\n09:10\n09:20\n09:30\n09:40\n09:50\n10:00\n10:10\n10:20\n10:30\n10:40\n10:50\n11:00\n11:10\n11:20\n11:30\n11:40\n11:50\n12:00\n12:20\n12:40"),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(height: 20,),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          child: Text("하교\n\n09:10\n09:20\n09:30\n09:40\n09:50\n10:00\n10:10\n10:20\n10:30\n10:40\n10:50\n11:00\n11:20\n11:40\n12:00\n13:00\n13:20\n13:40\n14:00\n14:20\n14:40\n15:00\n15:10\n15:20\n15:30\n15:40\n16:00\n16:30\n17:00\n17:10\n17:20\n17:30\n18:00\n18:30\n19:00"),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(height: 20,),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                          child: Text("운전석\n\n1 2          3 4\n5 6          7 8\n9 10        11 12\n13 14      15 16\n17 18      19 20\n21 22      23 24\n25 26      27 28\n29 30      31 32\n33 34      35 36\n37 38      39 40\n\n가끔 오른쪽이\n1일때도 있음"),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              );
+            }
+          ),
+        )
     );
   }
 }
@@ -275,7 +286,7 @@ void runningApp() async {
       } else {
         print("하교 버스 리스트 가져오기 실패");
       }
-      
+
       // 등교(노원) 버스리스트 가져오기
       var busUpResponse = await dio.get(busListUpUrl, options: Options(headers: header, extra: cookie),);
       if (busUpResponse.statusCode == 200) {
